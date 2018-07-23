@@ -69,7 +69,7 @@ public class ChooseAreaFragment extends Fragment {
         titleText = (TextView) view.findViewById(R.id.title_text);
         backButton = (Button) view.findViewById(R.id.back_button);
         listView = (ListView) view.findViewById(R.id.list_view);
-        adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, dataList);
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, dataList);
         listView.setAdapter(adapter);
 
         return view;
@@ -96,9 +96,9 @@ public class ChooseAreaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if ( currentLevel == LEVEL_CITY ) {
-
+                    queryProvinces();
                 } else if ( currentLevel == LEVEL_COUNTRY ) {
-
+                    queryCities();
                 }
             }
         });
@@ -199,7 +199,7 @@ public class ChooseAreaFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                String responseText = response.body().toString();
+                String responseText = response.body().string();
                 boolean result = false;
 
                 if ( type == AREA_TYPE.AREA_TYPE_RPOVINCE ) {
@@ -241,7 +241,7 @@ public class ChooseAreaFragment extends Fragment {
      */
     private void showProgressDialog() {
         if ( progressDialog == null ) {
-            progressDialog = new ProgressDialog(getContext());
+            progressDialog = new ProgressDialog(getActivity());
             progressDialog.setMessage("正在加载...");
             progressDialog.setCanceledOnTouchOutside(false);
         }
